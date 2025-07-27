@@ -121,3 +121,67 @@ section:last-of-type {
 	opacity: 1;
 	transform: translateY(0);
 }
+@media (max-width: 600px) {
+	.container {
+		padding: 2rem 1rem;
+	}
+
+	.password-box {
+		padding: 2rem;
+	}
+}
+
+body.modal-open {
+    overflow: hidden;
+  }
+
+  /* El fondo oscuro del modal */
+  .modal-overlay {
+    position: fixed; /* Se posiciona sobre toda la ventana */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Fondo semi-transparente */
+    display: flex; /* Centra el contenido vertical y horizontalmente */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Se asegura que esté por encima de todo */
+    padding: 1rem;
+  }
+
+  /* La caja de contenido del modal */
+  .modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
+    max-width: 500px; /* Ancho máximo */
+    width: 90%;
+    text-align: center;
+  }
+
+  /* El botón de cerrar */
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #333;
+  }
+
+  #modal-titulo {
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  #modal-descripcion {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666;
+  }
