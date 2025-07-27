@@ -28,8 +28,54 @@ const { title, nombreNovia } = Astro.props;
     <link rel="stylesheet" href="/src/styles/global.css" />
   </head>
   <body>
-    <slot />
+    <!-- Capa de protección con contraseña -->
+    <div id="password-protection" class="password-overlay">
+      <div class="password-box">
+        <h2>Un regalo para ti</h2>
+        <p>Para ver el contenido, introduce nuestra fecha especial (DDMMAA)</p>
+        <form id="password-form">
+          <input
+            type="password"
+            id="password-input"
+            placeholder="Contraseña"
+            autofocus
+          />
+          <button type="submit">Entrar</button>
+          <p id="error-message" class="error-message" style="display: none;">
+            Contraseña incorrecta. ¡Inténtalo de nuevo!
+          </p>
+        </form>
+      </div>
+    </div>
+
+    <!-- El contenido principal de la web, inicialmente oculto -->
+    <div id="main-content" style="visibility: hidden;">
+      <slot />
+    </div>
+
     <script>
+      // Lógica de la contraseña
+      const correctPassword = "040922";
+      const form = document.getElementById("password-form");
+      const passwordInput = document.getElementById("password-input");
+      const protectionOverlay = document.getElementById("password-protection");
+      const mainContent = document.getElementById("main-content");
+      const errorMessage = document.getElementById("error-message");
+
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        if (passwordInput.value === correctPassword) {
+          // Contraseña correcta: oculta la capa y muestra el contenido
+          protectionOverlay.style.display = "none";
+          mainContent.style.visibility = "visible";
+        } else {
+          // Contraseña incorrecta: muestra mensaje de error
+          errorMessage.style.display = "block";
+          passwordInput.value = ""; // Limpia el campo
+          passwordInput.focus();
+        }
+      });
+
       // Este script observa los elementos que tienen la clase 'animate-on-scroll'
       const observer = new IntersectionObserver(
         (entries) => {
