@@ -10,13 +10,30 @@ const { nombre } = Astro.props;
     <h1>Para {nombre}, con todo mi amor</h1>
     <p>He creado este pequeño rincón en el universo digital solo para ti.</p>
   </div>
+  <a
+    href="#nuestra-historia"
+    class="scroll-down-arrow"
+    aria-label="Bajar a la siguiente sección"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"><path d="m6 9 6 6 6-6"></path></svg
+    >
+  </a>
 </section>
 
 <style>
   .portada {
     height: 100vh;
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
-      url("/photos/foto-portada.jpg"); /* <-- Asegúrate que la foto exista */
+      url("/photos/portada.webp");
     background-size: cover;
     background-position: center;
     display: flex;
@@ -24,6 +41,7 @@ const { nombre } = Astro.props;
     align-items: center;
     text-align: center;
     color: white;
+    position: relative; /* Necesario para posicionar la flecha */
   }
   .contenido {
     max-width: 80%;
@@ -36,5 +54,36 @@ const { nombre } = Astro.props;
   p {
     font-size: 1.5rem;
     font-style: italic;
+  }
+
+  .scroll-down-arrow {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+    animation: bounce 2.5s infinite;
+    cursor: pointer;
+  }
+
+  .scroll-down-arrow svg {
+    width: 2.5rem;
+    height: 2.5rem;
+  }
+
+  @keyframes bounce {
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-20px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-10px);
+    }
   }
 </style>

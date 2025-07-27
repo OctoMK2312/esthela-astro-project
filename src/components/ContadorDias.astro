@@ -1,0 +1,79 @@
+---
+interface Props {
+  fechaInicio: string;
+}
+
+const { fechaInicio } = Astro.props;
+---
+
+<div class="contador-wrapper animate-on-scroll">
+  <div class="contador-container" data-fecha-inicio={fechaInicio}>
+    <div class="numero" id="dias-juntos">...</div>
+    <div class="texto">días construyendo nuestra historia</div>
+  </div>
+</div>
+
+<script>
+  // Obtenemos el contenedor y la fecha de inicio desde el atributo data
+  const container = document.querySelector(".contador-container");
+  if (container) {
+    const fechaInicioStr = (container as HTMLElement).dataset.fechaInicio;
+
+    // Calculamos la diferencia en días
+    let fechaInicio: Date;
+    if (fechaInicioStr) {
+      fechaInicio = new Date(fechaInicioStr);
+    } else {
+      // Si no hay fecha, usamos una fecha por defecto o mostramos error
+      fechaInicio = new Date();
+      console.error(
+        "No se encontró fechaInicio en el atributo data-fecha-inicio."
+      );
+    }
+    const hoy = new Date();
+    // Aseguramos que ambas fechas estén en la misma zona horaria (medianoche UTC) para evitar errores de cálculo
+    const utc1 = Date.UTC(
+      fechaInicio.getFullYear(),
+      fechaInicio.getMonth(),
+      fechaInicio.getDate()
+    );
+    const utc2 = Date.UTC(hoy.getFullYear(), hoy.getMonth(), hoy.getDate());
+    const diferenciaDias = Math.floor((utc2 - utc1) / (1000 * 60 * 60 * 24));
+
+    // Actualizamos el número en la página
+    const diasElemento = document.getElementById("dias-juntos");
+    if (diasElemento) {
+      diasElemento.textContent = diferenciaDias.toString();
+    }
+  }
+</script>
+
+<style>
+  .contador-wrapper {
+    margin: 2rem auto 3rem;
+  }
+  .contador-container {
+    background-color: var(--color-primario);
+    color: white;
+    padding: 1.5rem 2rem;
+    border-radius: 12px;
+    max-width: 350px;
+    margin: 0 auto;
+    box-shadow: 0 5px 20px #d4afb966;
+    text-align: center;
+  }
+  .numero {
+    font-family: var(--fuente-titulos);
+    font-size: 4.5rem;
+    font-weight: bold;
+    line-height: 1;
+    color: white;
+  }
+  .texto {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.9;
+  }
+</style>

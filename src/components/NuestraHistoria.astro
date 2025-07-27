@@ -1,62 +1,334 @@
 ---
-// ¡Personaliza estos momentos!
+import ContadorDias from "./ContadorDias.astro";
+
 const momentos = [
   {
-    fecha: "15 de Enero, 2022",
-    evento: "El día que nos conocimos y todo empezó.",
+    fecha: "04 de Septiembre, 2022",
+    evento:
+      "El día que comenzamos nuestra historia. Ese día me pediste ser tu novio.",
   },
   {
-    fecha: "20 de Junio, 2022",
-    evento: "Nuestro primer viaje juntos, inolvidable.",
+    fecha: "16 de septiembre, 2022",
+    evento:
+      "Nuestro primer beso debajo de una caseta de policias, mientras llovía.",
   },
   {
-    fecha: "10 de Marzo, 2023",
-    evento: "Adoptamos a nuestro pequeño gran amigo.",
+    fecha: "20 de septiembre, 2022",
+    evento: "El día de tu graduación de la prepa.",
   },
-  { fecha: "Hoy", evento: "Y cada día a tu lado es una nueva aventura." },
+  {
+    fecha: "01 de octubre, 2022",
+    evento: "Nuestro primer viaje juntos al Centro Ceremonial Otomí.",
+  },
+  {
+    fecha: "14 de octubre, 2022",
+    evento: "Nuestro primer viaje juntos a la playa.",
+  },
+  {
+    fecha: "24 de diciembre, 2022",
+    evento:
+      "Nuestra primera navidad juntos. Y comimos una cajita feliz con juguetes de Mario.",
+  },
+  {
+    fecha: "13 de febrero, 2023",
+    evento:
+      "Tu primer cumpleaños juntos. Ese día tardaste mucho en llegar, pero te esperé hasta el final.",
+  },
+  {
+    fecha: "16 de marzo, 2023",
+    evento:
+      "Nuestro primer viaje juntos a la Ciudad de México. Fuimos a varios museos y comimos en un puesto dentro del bosque de Chapultepec.",
+  },
+  {
+    fecha: "29 de julio del 2023",
+    evento: "La primera vez que fuimos a la feria de Temoaya.",
+  },
+  {
+    fecha: "02 de septiembre, 2023",
+    evento:
+      "Un año juntos. Ese día celebramos mucho: fuimos al cine, a Recórcholis y llegamos muy tarde a casa.",
+  },
+  {
+    fecha: "09 de marzo, 2024",
+    evento:
+      "Nuestro primer viaje juntos a Zacango, recuerdo que ese día lloraste mucho cuando entramos a la exposición del mundo marino.",
+  },
+  {
+    fecha: "21 de septiembre, 2024",
+    evento:
+      "Nuestro primer viaje juntos a la Ciudad de México sin planearlo. Nos escapamos juntos, sin decir nada a nuestros papás, recuerdo que no sabíamos llegar bien.",
+  },
+  {
+    fecha: "29 de septiembre, 2024",
+    evento:
+      "Fuimos a la Ciudad de México al parque Aztlán, recuerdo que tenía mucho miedo de subirme a la rueda de la fortuna, pero tú me dijiste que no pasaba nada y me subí.",
+  },
 ];
+
+const fechaInicioRelacion = "2022-09-04";
 ---
 
-<section class="container">
-  <h2>Nuestra Historia</h2>
-  <div class="timeline">
+<section id="nuestra-historia" class="container">
+  <h2>Nuestra Historia Juntos</h2>
+  <ContadorDias fechaInicio={fechaInicioRelacion} />
+  <div class="timeline-container">
     {
-      momentos.map((momento) => (
-        <div class="timeline-item">
-          <div class="timeline-fecha">{momento.fecha}</div>
-          <div class="timeline-evento">{momento.evento}</div>
+      momentos.map((momento, index) => (
+        // CAMBIO 1: Añadimos una clase 'item-oculto' si el índice es 3 o mayor (el 4to elemento)
+        <div
+          class={`timeline-item ${index % 2 === 0 ? "left" : "right"} ${index >= 3 ? "item-oculto" : ""}`}
+        >
+          <div class="timeline-content animate-on-scroll">
+            <time class="timeline-fecha">{momento.fecha}</time>
+            <p class="timeline-evento">{momento.evento}</p>
+          </div>
         </div>
       ))
     }
   </div>
+  <div class="timeline-button-container">
+    <button id="btn-mostrar-mas" class="cta-button"
+      >Ver historia completa 👇</button
+    >
+  </div>
 </section>
 
 <style>
-  .timeline {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    gap: 2rem;
+  /* Contenedor principal de la línea de tiempo */
+  .timeline-container {
     position: relative;
-    border-left: 2px solid var(--color-primario);
-    padding-left: 2rem;
+    width: 100%;
+    max-width: 800px;
+    margin: 3rem auto;
+    padding: 2rem 0;
   }
-  .timeline-item {
-    position: relative;
-    text-align: left;
-  }
-  .timeline-item::before {
+
+  /* La línea vertical del centro */
+  .timeline-container::before {
     content: "";
     position: absolute;
-    left: -2.5rem;
-    top: 0.25rem;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 3px;
+    height: 100%;
     background-color: var(--color-primario);
+    border-radius: 3px;
   }
+
+  /* Cada elemento (contenedor del ícono y la tarjeta) */
+  .timeline-item {
+    padding: 10px 40px;
+    position: relative;
+    width: 50%;
+    /* Transición para una aparición suave (opcional pero recomendado) */
+    transition: opacity 0.5s ease;
+  }
+
+  /* CAMBIO 3: Nueva clase para ocultar los items por defecto */
+  .item-oculto {
+    display: none;
+  }
+
+  /* Posiciona los elementos a la izquierda y derecha */
+  .timeline-item.left {
+    left: 0;
+    padding-right: 30px;
+  }
+
+  .timeline-item.right {
+    left: 50%;
+    padding-left: 30px;
+  }
+
+  /* El ícono de corazón en la línea de tiempo */
+  .timeline-item::after {
+    content: "❤️";
+    position: absolute;
+    top: 20px;
+    right: -14px;
+    font-size: 1.5rem;
+    background-color: #fff;
+    border-radius: 50%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 28px;
+    height: 28px;
+  }
+
+  .timeline-item.right::after {
+    left: -14px;
+  }
+
+  /* La tarjeta que contiene la fecha y el evento */
+  .timeline-content {
+    padding: 1.5rem;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    position: relative;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+  }
+
+  .timeline-content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  }
+
+  /* El puntero/flecha de la tarjeta */
+  .timeline-content::before {
+    content: "";
+    position: absolute;
+    top: 22px;
+    width: 0;
+    height: 0;
+    border-style: solid;
+  }
+
+  .timeline-item.left .timeline-content::before {
+    right: -10px;
+    border-width: 10px 0 10px 10px;
+    border-color: transparent transparent transparent #f9f9f9;
+  }
+
+  .timeline-item.right .timeline-content::before {
+    left: -10px;
+    border-width: 10px 10px 10px 0;
+    border-color: transparent #f9f9f9 transparent transparent;
+  }
+
+  /* Estilos para el texto */
   .timeline-fecha {
     font-weight: bold;
     color: var(--color-acento);
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+
+  .timeline-evento {
+    margin: 0;
+    line-height: 1.6;
+    color: #333;
+  }
+
+  /* CAMBIO 4: Estilos para el contenedor del botón y el botón mismo */
+  .timeline-button-container {
+    text-align: center;
+    padding: 2rem 0;
+  }
+
+  .cta-button {
+    background-color: var(
+      --color-acento,
+      #e75480
+    ); /* Color de acento o un rosa por defecto */
+    color: white;
+    border: none;
+    padding: 12px 28px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .cta-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  }
+
+  /* Animación de entrada */
+  .animate-on-scroll {
+    opacity: 0;
+    transform: translateY(20px);
+    transition:
+      opacity 0.6s ease-out,
+      transform 0.6s ease-out;
+  }
+
+  .animate-on-scroll.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsividad para pantallas pequeñas */
+  @media screen and (max-width: 768px) {
+    .timeline-container::before {
+      left: 20px;
+    }
+
+    .timeline-item {
+      width: 100%;
+      padding-left: 55px;
+      padding-right: 15px;
+    }
+
+    .timeline-item.right {
+      left: 0%;
+    }
+
+    .timeline-item::after {
+      left: 6px;
+    }
+
+    .timeline-item.left .timeline-content::before,
+    .timeline-item.right .timeline-content::before {
+      left: -10px;
+      border-width: 10px 10px 10px 0;
+      border-color: transparent #f9f9f9 transparent transparent;
+    }
   }
 </style>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Script para la animación de scroll
+    const scrollElements = document.querySelectorAll(".animate-on-scroll");
+
+    const elementInView = (el, dividend = 1) => {
+      const elementTop = el.getBoundingClientRect().top;
+      return (
+        elementTop <=
+        (window.innerHeight || document.documentElement.clientHeight) / dividend
+      );
+    };
+
+    const displayScrollElement = (element) => {
+      element.classList.add("is-visible");
+    };
+
+    const handleScrollAnimation = () => {
+      scrollElements.forEach((el) => {
+        if (elementInView(el, 1.25)) {
+          displayScrollElement(el);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScrollAnimation);
+    handleScrollAnimation();
+
+    // CAMBIO 5: Nueva lógica para el botón "Ver más"
+    const showMoreBtn = document.getElementById("btn-mostrar-mas");
+    const hiddenItems = document.querySelectorAll(".item-oculto");
+
+    if (showMoreBtn && hiddenItems.length > 0) {
+      showMoreBtn.addEventListener("click", () => {
+        hiddenItems.forEach((item) => {
+          // Cambiamos 'display: none' por 'block' para que sea visible
+          item.style.display = "block";
+        });
+
+        // Ocultamos el botón después de hacer clic
+        showMoreBtn.style.display = "none";
+      });
+    } else if (showMoreBtn) {
+      // Si no hay items que mostrar, ocultamos el botón desde el inicio
+      showMoreBtn.style.display = "none";
+    }
+  });
+</script>

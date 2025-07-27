@@ -29,5 +29,23 @@ const { title, nombreNovia } = Astro.props;
   </head>
   <body>
     <slot />
+    <script>
+      // Este script observa los elementos que tienen la clase 'animate-on-scroll'
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            // Cuando un elemento entra en la pantalla, le añade la clase 'visible'
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+            }
+          });
+        },
+        { threshold: 0.1 } // La animación se dispara cuando el 10% del elemento es visible
+      );
+
+      // Le decimos al observador que vigile a todos los elementos con esa clase
+      const elementsToAnimate = document.querySelectorAll(".animate-on-scroll");
+      elementsToAnimate.forEach((el) => observer.observe(el));
+    </script>
   </body>
 </html>

@@ -1,21 +1,101 @@
 ---
-// ¡Escribe aquí tus razones!
+// ¡Personaliza aquí tus razones con más detalle!
 const razones = [
-  "Por tu risa que ilumina cualquier día.",
-  "Porque me haces ser una mejor persona.",
-  "Por cómo arrugas la nariz cuando algo te divierte.",
-  "Porque contigo, hasta el silencio es cómodo.",
-  "Por tu inteligencia y tu pasión por aprender.",
-  "Porque eres mi refugio y mi aventura, todo en uno.",
+  {
+    titulo: "Por tu risa",
+    descripcion:
+      "Tu risa tiene el poder de iluminar el día más gris. Es contagiosa, genuina y me recuerda que la felicidad se encuentra en los momentos más simples. A veces suele ser un poco escandalosa, pero creo que es lo que le da belleza a tu forma de reir.",
+  },
+  {
+    titulo: "Porque me haces mejor persona",
+    descripcion:
+      "Desde que estás en mi vida, siento que soy una mejor versión de mí mismo. Me inspiras a ser más paciente, más amable y a ver el mundo con más optimismo. Tu amor me motiva a crecer y a ser la mejor persona que puedo ser.",
+  },
+  {
+    titulo: "Por tu hoyuelo",
+    descripcion:
+      "Cada vez que sonríes y ese pequeño hoyuelo aparece en tu mejilla, mi corazón se derrite un poco más. Me recuerda que la belleza está en los detalles y que esos pequeños rasgos únicos son los que hacen que te ame aún más.",
+  },
+  {
+    titulo: "Por nuestros silencios",
+    descripcion:
+      "Contigo, el silencio nunca es incómodo. Es un espacio de paz donde simplemente disfrutamos de la compañía del otro, sabiendo que no necesitamos palabras para entendernos.",
+  },
+  {
+    titulo: "Por tu resiliencia",
+    descripcion:
+      "Admiro tu capacidad para enfrentar los desafíos. Se que a veces no eres tan pasiente, pero siempre encuentras la fuerza para levantarte y seguir adelante.",
+  },
+  {
+    titulo: "Porque eres mi hogar",
+    descripcion:
+      "No importa dónde estemos, si estoy contigo, me siento en casa. Eres mi refugio seguro y mi mayor aventura, todo al mismo tiempo.",
+  },
 ];
 ---
 
-<section class="container">
+<section class="container animate-on-scroll">
   <h2>Algunas razones por las que te amo</h2>
   <div class="grid-razones">
-    {razones.map((razon) => <div class="card">{razon}</div>)}
+    {
+      razones.map((razon, index) => (
+        <div class="card" data-index={index}>
+          {razon.titulo}
+        </div>
+      ))
+    }
   </div>
 </section>
+
+<!-- Estructura del Modal -->
+<div id="razon-modal" class="modal-overlay" style="display: none;">
+  <div class="modal-content">
+    <button class="modal-close" aria-label="Cerrar modal">&times;</button>
+    <h3 id="modal-titulo"></h3>
+    <p id="modal-descripcion"></p>
+  </div>
+</div>
+
+<script define:vars={{ razones }}>
+  const cards = document.querySelectorAll(".card[data-index]");
+  const modal = document.getElementById("razon-modal");
+  const modalCloseBtn = modal.querySelector(".modal-close");
+  const modalTitulo = document.getElementById("modal-titulo");
+  const modalDescripcion = document.getElementById("modal-descripcion");
+  const body = document.body;
+
+  function openModal(index) {
+    const razon = razones[index];
+    modalTitulo.textContent = razon.titulo;
+    modalDescripcion.textContent = razon.descripcion;
+    modal.style.display = "flex";
+    body.classList.add("modal-open");
+  }
+
+  function closeModal() {
+    modal.style.display = "none";
+    body.classList.remove("modal-open");
+  }
+
+  cards.forEach((card) => {
+    card.addEventListener("click", () => {
+      openModal(card.dataset.index);
+    });
+  });
+
+  modalCloseBtn.addEventListener("click", closeModal);
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      closeModal();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modal.style.display === "flex") {
+      closeModal();
+    }
+  });
+</script>
 
 <style>
   .grid-razones {
@@ -32,5 +112,13 @@ const razones = [
     border-left: 5px solid var(--color-secundario);
     font-size: 1.1rem;
     text-align: left;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08);
   }
 </style>
