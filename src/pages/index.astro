@@ -1,16 +1,23 @@
 ---
+import Layout from "../layouts/Layout.astro";
+import Portada from "../components/Portada.astro";
+import NuestraHistoria from "../components/NuestraHistoria.astro";
+import Razones from "../components/Razones.astro";
+import Galeria from "../components/Galeria.astro";
+import PieDePagina from "../components/PieDePagina.astro";
 
+const nombreDeTuNovia = "Esthela Victoria Suarez"; // <-- ¡Cambia esto!
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<Layout
+  title={`Para ${nombreDeTuNovia}, con todo mi amor`}
+  nombreNovia={nombreDeTuNovia}
+>
+  <main>
+    <Portada nombre={nombreDeTuNovia} />
+    <NuestraHistoria />
+    <Razones />
+    <Galeria />
+    <PieDePagina />
+  </main>
+</Layout>

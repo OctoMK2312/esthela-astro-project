@@ -1,0 +1,46 @@
+:root {
+	--color-primario: #d4afb9; /* Un rosa palo suave */
+	--color-secundario: #d1cfe2; /* Un lila claro */
+	--color-fondo: #fdfcfc; /* Un blanco roto muy claro */
+	--color-texto: #333;
+	--color-acento: #9cadce; /* Un azul suave */
+
+	--fuente-titulos: "Playfair Display", serif;
+	--fuente-texto: "Poppins", sans-serif;
+}
+
+html {
+	font-family: var(--fuente-texto);
+	background-color: var(--color-fondo);
+	color: var(--color-texto);
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+	font-family: var(--fuente-titulos);
+	color: var(--color-primario);
+	margin: 0;
+}
+
+.container {
+	max-width: 1000px;
+	margin: 0 auto;
+	padding: 4rem 2rem;
+	text-align: center;
+}
+
+section {
+	border-bottom: 1px solid #eee;
+}
+
+section:last-of-type {
+	border-bottom: none;
+}

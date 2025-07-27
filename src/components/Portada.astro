@@ -1,0 +1,40 @@
+---
+interface Props {
+  nombre: string;
+}
+const { nombre } = Astro.props;
+---
+
+<section class="portada">
+  <div class="contenido">
+    <h1>Para {nombre}, con todo mi amor</h1>
+    <p>He creado este pequeño rincón en el universo digital solo para ti.</p>
+  </div>
+</section>
+
+<style>
+  .portada {
+    height: 100vh;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+      url("/photos/foto-portada.jpg"); /* <-- Asegúrate que la foto exista */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    color: white;
+  }
+  .contenido {
+    max-width: 80%;
+  }
+  h1 {
+    font-size: 4rem;
+    color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+  p {
+    font-size: 1.5rem;
+    font-style: italic;
+  }
+</style>

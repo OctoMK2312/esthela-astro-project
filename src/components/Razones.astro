@@ -1,0 +1,36 @@
+---
+// ¡Escribe aquí tus razones!
+const razones = [
+  "Por tu risa que ilumina cualquier día.",
+  "Porque me haces ser una mejor persona.",
+  "Por cómo arrugas la nariz cuando algo te divierte.",
+  "Porque contigo, hasta el silencio es cómodo.",
+  "Por tu inteligencia y tu pasión por aprender.",
+  "Porque eres mi refugio y mi aventura, todo en uno.",
+];
+---
+
+<section class="container">
+  <h2>Algunas razones por las que te amo</h2>
+  <div class="grid-razones">
+    {razones.map((razon) => <div class="card">{razon}</div>)}
+  </div>
+</section>
+
+<style>
+  .grid-razones {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+  }
+  .card {
+    background-color: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    border-left: 5px solid var(--color-secundario);
+    font-size: 1.1rem;
+    text-align: left;
+  }
+</style>

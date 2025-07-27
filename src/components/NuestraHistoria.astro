@@ -1,0 +1,62 @@
+---
+// ¡Personaliza estos momentos!
+const momentos = [
+  {
+    fecha: "15 de Enero, 2022",
+    evento: "El día que nos conocimos y todo empezó.",
+  },
+  {
+    fecha: "20 de Junio, 2022",
+    evento: "Nuestro primer viaje juntos, inolvidable.",
+  },
+  {
+    fecha: "10 de Marzo, 2023",
+    evento: "Adoptamos a nuestro pequeño gran amigo.",
+  },
+  { fecha: "Hoy", evento: "Y cada día a tu lado es una nueva aventura." },
+];
+---
+
+<section class="container">
+  <h2>Nuestra Historia</h2>
+  <div class="timeline">
+    {
+      momentos.map((momento) => (
+        <div class="timeline-item">
+          <div class="timeline-fecha">{momento.fecha}</div>
+          <div class="timeline-evento">{momento.evento}</div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<style>
+  .timeline {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    position: relative;
+    border-left: 2px solid var(--color-primario);
+    padding-left: 2rem;
+  }
+  .timeline-item {
+    position: relative;
+    text-align: left;
+  }
+  .timeline-item::before {
+    content: "";
+    position: absolute;
+    left: -2.5rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    border-radius: 50%;
+    background-color: var(--color-primario);
+  }
+  .timeline-fecha {
+    font-weight: bold;
+    color: var(--color-acento);
+  }
+</style>

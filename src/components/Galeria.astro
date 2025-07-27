@@ -1,0 +1,30 @@
+---
+// Añade aquí los nombres de tus fotos
+const fotos = ["foto-galeria-1.jpg", "foto-galeria-2.jpg", "foto-galeria-3.jpg", "foto-galeria-4.jpg"];
+---
+
+<section class="container">
+	<h2>Nuestros Momentos</h2>
+	<div class="galeria">
+		{
+			fotos.map((foto) => (
+				<img src={`/photos/${foto}`} alt="Un momento especial juntos" loading="lazy" />
+			))
+		}
+	</div>
+</section>
+
+<style>
+	.galeria {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+		gap: 1rem;
+		margin-top: 2rem;
+	}
+	img {
+		width: 100%;
+		height: auto;
+		border-radius: 8px;
+		box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+	}
+</style>
