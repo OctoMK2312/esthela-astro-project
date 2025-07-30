@@ -94,7 +94,6 @@ const fechaInicioRelacion = "2022-09-04";
 </section>
 
 <style>
-  /* Contenedor principal de la línea de tiempo */
   .timeline-container {
     position: relative;
     width: 100%;
@@ -103,7 +102,6 @@ const fechaInicioRelacion = "2022-09-04";
     padding: 2rem 0;
   }
 
-  /* La línea vertical del centro */
   .timeline-container::before {
     content: "";
     position: absolute;
@@ -114,63 +112,65 @@ const fechaInicioRelacion = "2022-09-04";
     height: 100%;
     background-color: var(--color-primario);
     border-radius: 3px;
+    /* Transición para ocultarlo suavemente en móvil */
+    transition: opacity 0.3s ease;
   }
 
-  /* Cada elemento (contenedor del ícono y la tarjeta) */
   .timeline-item {
     padding: 10px 40px;
     position: relative;
     width: 50%;
-    /* Transición para una aparición suave (opcional pero recomendado) */
-    transition: opacity 0.5s ease;
+    box-sizing: border-box;
+    margin-bottom: 2rem; /* Añadimos un margen inferior para separar las tarjetas */
   }
 
-  /* CAMBIO 3: Nueva clase para ocultar los items por defecto */
+  .timeline-item:last-child {
+    margin-bottom: 0;
+  }
+
   .item-oculto {
     display: none;
   }
 
-  /* Posiciona los elementos a la izquierda y derecha */
+  .item-oculto.visible {
+    display: block;
+  }
+
   .timeline-item.left {
     left: 0;
-    padding-right: 30px;
   }
 
   .timeline-item.right {
     left: 50%;
-    padding-left: 30px;
   }
 
-  /* El ícono de corazón en la línea de tiempo */
   .timeline-item::after {
     content: "❤️";
     position: absolute;
     top: 20px;
     right: -14px;
     font-size: 1.5rem;
-    background-color: #fff;
+    background-color: var(--color-fondo);
     border-radius: 50%;
     z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 28px;
-    height: 28px;
+    line-height: 1;
+    transition: opacity 0.3s ease;
   }
 
   .timeline-item.right::after {
     left: -14px;
   }
 
-  /* La tarjeta que contiene la fecha y el evento */
   .timeline-content {
     padding: 1.5rem;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
+    background-color: #fff;
+    border: 1px solid var(--color-secundario);
     border-radius: 12px;
     position: relative;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    transition: transform 0.3s ease;
+    transition:
+      transform 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .timeline-content:hover {
@@ -178,7 +178,6 @@ const fechaInicioRelacion = "2022-09-04";
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
   }
 
-  /* El puntero/flecha de la tarjeta */
   .timeline-content::before {
     content: "";
     position: absolute;
@@ -186,21 +185,22 @@ const fechaInicioRelacion = "2022-09-04";
     width: 0;
     height: 0;
     border-style: solid;
+    border-color: transparent;
+    transition: border-color 0.3s ease;
   }
 
   .timeline-item.left .timeline-content::before {
-    right: -10px;
+    right: -11px;
     border-width: 10px 0 10px 10px;
-    border-color: transparent transparent transparent #f9f9f9;
+    border-left-color: var(--color-secundario);
   }
 
   .timeline-item.right .timeline-content::before {
-    left: -10px;
+    left: -11px;
     border-width: 10px 10px 10px 0;
-    border-color: transparent #f9f9f9 transparent transparent;
+    border-right-color: var(--color-secundario);
   }
 
-  /* Estilos para el texto */
   .timeline-fecha {
     font-weight: bold;
     color: var(--color-acento);
@@ -208,23 +208,18 @@ const fechaInicioRelacion = "2022-09-04";
     margin-bottom: 0.5rem;
   }
 
+  /* ... otros estilos como .timeline-evento y .cta-button se mantienen igual ... */
   .timeline-evento {
     margin: 0;
     line-height: 1.6;
-    color: #333;
+    color: var(--color-texto);
   }
-
-  /* CAMBIO 4: Estilos para el contenedor del botón y el botón mismo */
   .timeline-button-container {
     text-align: center;
     padding: 2rem 0;
   }
-
   .cta-button {
-    background-color: var(
-      --color-acento,
-      #e75480
-    ); /* Color de acento o un rosa por defecto */
+    background-color: var(--color-acento);
     color: white;
     border: none;
     padding: 12px 28px;
@@ -235,13 +230,10 @@ const fechaInicioRelacion = "2022-09-04";
     transition: all 0.3s ease;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   }
-
   .cta-button:hover {
     transform: translateY(-3px);
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
   }
-
-  /* Animación de entrada */
   .animate-on-scroll {
     opacity: 0;
     transform: translateY(20px);
@@ -249,47 +241,45 @@ const fechaInicioRelacion = "2022-09-04";
       opacity 0.6s ease-out,
       transform 0.6s ease-out;
   }
-
   .animate-on-scroll.is-visible {
     opacity: 1;
     transform: translateY(0);
   }
 
-  /* Responsividad para pantallas pequeñas */
-  @media screen and (max-width: 768px) {
+  /* --- VISTA MÓVIL TOTALMENTE SIMPLIFICADA --- */
+  @media (max-width: 768px) {
+    /* 1. Ocultamos la línea de tiempo central */
     .timeline-container::before {
-      left: 20px;
+      display: none;
     }
 
+    /* 2. Hacemos que cada item sea un bloque simple */
     .timeline-item {
-      width: 100%;
-      padding-left: 55px;
-      padding-right: 15px;
+      width: 100%; /* Ocupa todo el ancho disponible */
+      left: 0; /* Resetea cualquier posicionamiento */
+      padding: 0; /* Sin paddings extra, el container global ya los tiene */
+      margin-bottom: 1.5rem; /* Espacio entre tarjetas */
     }
 
+    /* 3. Nos aseguramos que la regla de 'right' no aplique */
     .timeline-item.right {
-      left: 0%;
+      left: 0;
     }
 
-    .timeline-item::after {
-      left: 6px;
-    }
-
-    .timeline-item.left .timeline-content::before,
-    .timeline-item.right .timeline-content::before {
-      left: -10px;
-      border-width: 10px 10px 10px 0;
-      border-color: transparent #f9f9f9 transparent transparent;
+    /* 4. Ocultamos el icono de corazón y la flecha de la tarjeta */
+    .timeline-item::after,
+    .timeline-content::before {
+      display: none;
     }
   }
 </style>
 
 <script>
   document.addEventListener("DOMContentLoaded", () => {
-    // Script para la animación de scroll
-    const scrollElements = document.querySelectorAll(".animate-on-scroll");
+    const scrollElements =
+      document.querySelectorAll<HTMLElement>(".animate-on-scroll");
 
-    const elementInView = (el, dividend = 1) => {
+    const elementInView = (el: Element, dividend = 1) => {
       const elementTop = el.getBoundingClientRect().top;
       return (
         elementTop <=
@@ -297,7 +287,52 @@ const fechaInicioRelacion = "2022-09-04";
       );
     };
 
-    const displayScrollElement = (element) => {
+    const displayScrollElement = (element: Element) => {
+      element.classList.add("is-visible");
+    };
+
+    const handleScrollAnimation = () => {
+      scrollElements.forEach((el) => {
+        if (elementInView(el, 1.25)) {
+          displayScrollElement(el);
+        }
+      });
+    };
+
+    window.addEventListener("scroll", handleScrollAnimation);
+    handleScrollAnimation();
+
+    const showMoreBtn = document.getElementById("btn-mostrar-mas");
+    const hiddenItems = document.querySelectorAll<HTMLElement>(".item-oculto");
+
+    if (showMoreBtn && hiddenItems.length > 0) {
+      showMoreBtn.addEventListener("click", () => {
+        hiddenItems.forEach((item) => {
+          item.classList.add("visible");
+        });
+        showMoreBtn.style.display = "none";
+
+        handleScrollAnimation();
+      });
+    } else if (showMoreBtn) {
+      showMoreBtn.style.display = "none";
+    }
+  });
+</script>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const scrollElements = document.querySelectorAll(".animate-on-scroll");
+
+    const elementInView = (el: Element, dividend = 1) => {
+      const elementTop = el.getBoundingClientRect().top;
+      return (
+        elementTop <=
+        (window.innerHeight || document.documentElement.clientHeight) / dividend
+      );
+    };
+
+    const displayScrollElement = (element: Element) => {
       element.classList.add("is-visible");
     };
 
@@ -319,15 +354,11 @@ const fechaInicioRelacion = "2022-09-04";
     if (showMoreBtn && hiddenItems.length > 0) {
       showMoreBtn.addEventListener("click", () => {
         hiddenItems.forEach((item) => {
-          // Cambiamos 'display: none' por 'block' para que sea visible
-          item.style.display = "block";
+          (item as HTMLElement).style.display = "block";
         });
-
-        // Ocultamos el botón después de hacer clic
         showMoreBtn.style.display = "none";
       });
     } else if (showMoreBtn) {
-      // Si no hay items que mostrar, ocultamos el botón desde el inicio
       showMoreBtn.style.display = "none";
     }
   });

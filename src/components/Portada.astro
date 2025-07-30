@@ -31,7 +31,8 @@ const { nombre } = Astro.props;
 
 <style>
   .portada {
-    height: 100vh;
+    height: 100vh; /* Fallback para navegadores antiguos */
+    height: 100svh; /* Altura del viewport más pequeña, soluciona problemas con la UI del navegador móvil */
     background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
       url("/photos/portada.webp");
     background-size: cover;
@@ -41,7 +42,7 @@ const { nombre } = Astro.props;
     align-items: center;
     text-align: center;
     color: white;
-    position: relative; /* Necesario para posicionar la flecha */
+    position: relative;
   }
   .contenido {
     max-width: 80%;
@@ -84,6 +85,16 @@ const { nombre } = Astro.props;
     }
     60% {
       transform: translateX(-50%) translateY(-10px);
+    }
+  }
+
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 3rem;
+    }
+
+    p {
+      font-size: 1.25rem;
     }
   }
 </style>
